@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: user-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/users-db
+    username: root
+    password: P@ss2021
+  jpa:
+    format-sql: true
+    show-sql: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  cloud:
+    loadbalancer:
+      ribbon:
+        enable: false
+
+#server:
+#  port: 8082
+#below property will make sure to allocate available port dynamically on run time if the service has multiple running instance
+server:
+  port: 0
+#Ribbon Load Balancer setup
+#task-service:
+#  ribbon:
+#  listOfServers: http://localhost:8083
+
+#Ribbon Netflix Ribbon Load Balancer is about to die, we can disable Ribbon load balancer so that load balancing is handled automatically
+#togther by OpenFeign and Eureka
+#spring.cloud.loadbalancer.ribbon.enabled=false
+
+#Eureka
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
+
+#below property will generate a random name for each instance of this-service and than register to the Discovery service
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
